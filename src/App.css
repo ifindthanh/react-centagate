@@ -1,0 +1,135 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  animation: App-logo-spin infinite 20s linear;
+  height: 80px;
+}
+
+.App-header {
+  background-color: #222;
+  height: 150px;
+  padding: 20px;
+  color: white;
+}
+
+.App-title {
+  font-size: 1.5em;
+}
+
+.App-intro {
+  font-size: large;
+}
+
+.left {
+  float: left;
+  margin-left: 5px;
+}
+
+.txt_right {
+  text-align: right;
+}
+
+.form-group {
+  padding-top: 10px;
+}
+
+.errorMsg {
+  text-align: left;
+  color: red;
+}
+
+.menu-header {
+    padding-top: 20px;
+}
+
+.menu-header ul li {
+    float: left;
+    list-style: none;
+}
+
+.menu-header ul li a {
+    display: block;
+    color: 01192d;
+    text-align: center;
+    padding: 15px;
+    text-decoration: none;
+    border: 1px solid #958a8f;
+    margin-left: 5px;
+}
+
+.menu-header ul li a:hover {
+    background-color: #958a8f;
+    text-decoration: none;
+}
+
+.question {
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.hidden{
+  display: none;
+}
+
+.last {
+  margin-bottom: 100px;
+}
+
+@keyframes App-logo-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.menubar ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+}
+
+.menubar ul li {
+    float: left;
+}
+
+.menubar ul li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+.headerbar ul li a:hover:not(.active) {
+    background-color: #111;
+}
+
+.menubar ul li a:hover:not(.active) {
+    background-color: #111;
+}
+
+.headerbar ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #515151;
+}
+
+.headerbar ul li {
+    float: right;
+}
+
+.headerbar ul li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+.active {
+    background-color: #4CAF50;
+}
