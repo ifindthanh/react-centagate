@@ -1,33 +1,31 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Switch, Route, Link  } from 'react-router-dom';
 import Single from './Single.js';
+import Transaction from './Transaction.js';
 import {Navbar, Nav, NavItem, NavDropdown, MenuItem} from 'react-bootstrap';
 import Main from './Main.js';
-import App from './App.js';
 import PropTypes from 'prop-types';
 
 class Home extends Component {
 
-  setActive(event){
-    var childNodes = this.refs.menuUl.childNodes;
-    for (var i=0; i < childNodes.length; i++) {
-      childNodes[i].childNodes[0].className="";
-    }
-
-    event.target.className="active";
+  setActive(tab){
+    var store = this.context.store;
+    store.dispatch({
+      type: "SELECT",
+      tab: tab
+    })
   }
 
   logout(){
     var myStore = this.context.store;
     myStore.dispatch({
-      type: "LOGOUT"
+      type: "RESET"
     });
-    window.location.href = window.location.href.split("#")[0];
   }
 
   render() {
     var myStore = this.context.store;
-    console.log(myStore.getState().loginStatus.username);
+    console.log(myStore.getState().selectedTab);
 
     return (
       <div>
@@ -41,13 +39,15 @@ class Home extends Component {
             </div>
             <div className="menubar">
               <ul ref="menuUl">
-                <li><Link onClick={this.setActive.bind(this)} className="active" to="/home">Home</Link></li>
-                <li><Link onClick={this.setActive.bind(this)} to="/about">About</Link></li>
-                <li><Link onClick={this.setActive.bind(this)} to="/selfService">SelfService</Link></li>
+                <li><Link onClick={this.setActive.bind(this, 'Home')} className={!myStore.getState().selectedTab || myStore.getState().selectedTab === 'Home' ? "active" : ""} to="/home">Home</Link></li>
+                <li><Link onClick={this.setActive.bind(this, 'About')} className={myStore.getState().selectedTab === 'About' ? "active" : ""} to="/about">About</Link></li>
+                <li><Link onClick={this.setActive.bind(this, 'SelfService')} className={myStore.getState().selectedTab === 'SelfService' ? "active" : ""} to="/selfService">SelfService</Link></li>
+                <li><Link onClick={this.setActive.bind(this, 'ListTransaction')} className={myStore.getState().selectedTab === 'ListTransaction' ? "active" : ""} to="/transactions">Transactions</Link></li>
               </ul>
             </div>
             <Route path="/home" component={Main} />
             <Route path="/about" component={Single} />
+            <Route path="/selfService" component={Transaction} />
           </div>
         </Router>
       </div>

@@ -14,6 +14,16 @@
   color: white;
 }
 
+.trans-header {
+  background-color: #222;
+  padding: 20px;
+  color: white;
+}
+
+.transaction-container {
+  padding-top: 10px;
+}
+
 .App-title {
   font-size: 1.5em;
 }
@@ -29,6 +39,10 @@
 
 .txt_right {
   text-align: right;
+}
+
+.txt_center {
+  text-align: center;
 }
 
 .form-group {

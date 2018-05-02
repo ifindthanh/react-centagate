@@ -13,27 +13,37 @@ var store = createStore(reducer, persistedItems);
 
 store.subscribe(()=>{
 	addItem({
+		authMethods: store.getState().authMethods,
 		loginStatus: store.getState().loginStatus,
-		selectedTab: store.getState().selectedTab
+		selectedTab: store.getState().selectedTab,
+		action: store.getState().action
 	});
 });
 function reducer(state = {}, action){
   return {
     authMethods: getAuthMethods(state.authMethods, action),
     loginStatus: getLoginStatus(state.loginStatus, action),
-    selectedTab: getSelectedTab(state.selectedTab, action)
+    selectedTab: getSelectedTab(state.selectedTab, action),
+		action: getAction(state.action, action)
   }
 }
 
-function getAuthMethods(authMethods=[], action){
+function getAuthMethods(authMethods={}, action){
   switch (action.type) {
     case 'SET_AUTH_METHODS':
       return {
 				firstStepLogin: true,
-				authMethods: action.authMethods
+				authMethods: action.authMethods,
+				username: action.username,
+				password: action.password
 			};
+		case 'LOGIN_FAILED':
+				return Object.assign({}, authMethods, {
+					failed: true,
+					message: action.message
+				});
       break;
-		case 'LOGOUT':
+		case 'RESET':
 	    return {};
     default:
     return authMethods;
@@ -47,10 +57,12 @@ function getLoginStatus(loginStatus={}, action){
 			return Object.assign({}, loginStatus, {
 				loggedIn: true,
 				username: action.username,
-				authToken: action.authToken
+				authToken: action.authToken,
+				secretCode: action.secretCode
 			});
       break;
-    case 'LOGOUT':
+			break;
+    case 'RESET':
       return {};
       break;
     default:
@@ -59,17 +71,36 @@ function getLoginStatus(loginStatus={}, action){
   return false;
 }
 
-function getSelectedTab(selectedTab='HOME', action){
+function getSelectedTab(selectedTab='Home', action){
 	switch (action.type) {
 		case 'SELECT':
-			return selectedTab;
+			return action.tab;
 			break;
-		case 'LOGOUT':
-	    return {};
+		case 'RESET':
+	    return "Home";
 		default:
 			return selectedTab;
 	}
   return selectedTab;
+}
+
+function getAction (myAction = {}, action) {
+	switch (action.type) {
+		case 'SELECT_ACTION':
+			return {
+				action: action.action,
+				data: action.data,
+				waitCallback: action.waitCallback
+			};
+			break;
+		case 'RESET':
+	    return {};
+		case 'RESET_ACTION':
+		  return {};
+		default:
+			return myAction;
+	}
+  return myAction;
 }
 
 ReactDOM.render(
